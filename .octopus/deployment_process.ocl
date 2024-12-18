@@ -18,10 +18,17 @@ step "run-a-script-2" {
     action {
         action_type = "Octopus.Script"
         properties = {
-            Octopus.Action.GitRepository.Source = "Project"
+            Octopus.Action.GitRepository.Source = "External"
             Octopus.Action.Script.ScriptFileName = "hello-octopus.ps1"
             Octopus.Action.Script.ScriptSource = "GitRepository"
         }
         worker_pool = "hosted-windows"
+
+        git_dependencies {
+            default_branch = "main"
+            git_credential_id = "GitCredentials-361"
+            git_credential_type = "Library"
+            repository_uri = "https://github.com/jbristowe/test-workflow.git"
+        }
     }
 }
